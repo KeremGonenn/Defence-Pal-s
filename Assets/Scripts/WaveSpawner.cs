@@ -78,6 +78,7 @@ public class WaveSpawner : MonoBehaviour
         if (searchCountdown <= 0f)
         {
             searchCountdown = 1f;
+            //Warning
             if (GameObject.FindGameObjectsWithTag("Enemy") == null)
             {
                 return false;
@@ -103,7 +104,6 @@ public class WaveSpawner : MonoBehaviour
 
     void SpawnEnemy(Transform _enemy)
     {
-        Debug.Log("Spawning Enemy: " + _enemy.name);
         Transform _sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Instantiate(_enemy, _sp.position, _sp.rotation);
 
