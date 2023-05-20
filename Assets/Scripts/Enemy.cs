@@ -1,19 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform hedefNokta; // Belirlediðiniz hedef noktanýn referansý
+
+    private NavMeshAgent agent; // Navigation Mesh Agent bileþeni
+
+
+    private void Start()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
+
+        hedefNokta = EnemyController.Instance.enemyTargetPoint;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        agent.SetDestination(hedefNokta.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
     }
 }
