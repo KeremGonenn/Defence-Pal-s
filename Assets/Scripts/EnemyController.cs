@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
 
     public static EnemyController Instance;
 
-    private void Start()
+    private void Awake()
     {
         if(Instance == null)
         {
