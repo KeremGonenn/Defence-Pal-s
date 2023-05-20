@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 
     private NavMeshAgent agent; // Navigation Mesh Agent bileþeni
 
-
+    public bool isTargetable;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
