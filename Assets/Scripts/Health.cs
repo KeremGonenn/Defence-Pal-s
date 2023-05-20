@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float _health;
-    public float HealthValue { get { return _health; } set {HealthValue = _health; } } 
+    //[SerializeField] private float _health;
+    public float HealthValue;
 }

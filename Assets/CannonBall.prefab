@@ -128,6 +128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a01c701fa1c444d40a6f6f31208123b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionEffect: {fileID: 2626559139361218663}
+  _explosionRadius: 0
+  _interactableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _damage: 0
 --- !u!1001 &2003307346998753759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -267,6 +273,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e1e9506f5904a64b81744324fb7cd50, type: 3}
+--- !u!1 &2626559139361218663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50,
+    type: 3}
+  m_PrefabInstance: {fileID: 2003307346998753759}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2626559139361218664 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4593184484909914551, guid: 2e1e9506f5904a64b81744324fb7cd50,

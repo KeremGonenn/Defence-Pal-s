@@ -77,6 +77,7 @@ public class NPCTower : MonoBehaviour
                 {
                     _targetEnemy.ReduceHealth(_damage);
 
+                    Debug.Log("31");
 
                     if (_targetEnemy.GetHealth() <= 0)
                     {

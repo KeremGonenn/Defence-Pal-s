@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class CannonBall : MonoBehaviour
 {
-    private GameObject _explosionEffect;
+    [SerializeField] private GameObject _explosionEffect;
     [SerializeField] private float _explosionRadius;
     [SerializeField] private LayerMask _interactableLayer;
     [SerializeField] private float _damage;
     private void Start()
     {
-        _explosionEffect = transform.GetChild(0).gameObject;
-
         StartCoroutine(CheckOnGround());
     }
 
@@ -21,8 +19,13 @@ public class CannonBall : MonoBehaviour
         {
             yield return null;
         }
-        _explosionEffect.SetActive(true);
-        _explosionEffect.transform.parent = null;
+        
+        if(_explosionEffect != null)
+        {
+            _explosionEffect.SetActive(true);
+            _explosionEffect.transform.parent = null;
+        }
+    
 
         GiveDamage();
 
