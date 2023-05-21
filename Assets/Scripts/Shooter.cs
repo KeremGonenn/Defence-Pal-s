@@ -7,6 +7,10 @@ public class Shooter : MonoBehaviour
     [SerializeField] private Rigidbody _cannonBall;
     [SerializeField] private Transform _spawnPoint;
 
+    [SerializeField] private Transform _shootPoint;
+
+    [SerializeField] private Transform _pivotPoint;
+
     [SerializeField] private Projectile _projectile;
 
     [SerializeField] private float _velocityMultiple;
@@ -25,6 +29,12 @@ public class Shooter : MonoBehaviour
 
             StartCoroutine(SetIsShootable());
         }
+
+        Vector3 distance = _shootPoint.position - _pivotPoint.position;
+
+        _pivotPoint.transform.rotation = Quaternion.Euler(distance.z * -3, distance.x * 10,_pivotPoint.transform.rotation.z);
+
+
     }
 
 

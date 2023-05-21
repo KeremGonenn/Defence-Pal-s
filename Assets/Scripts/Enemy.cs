@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,6 +13,12 @@ public class Enemy : MonoBehaviour
     private Animator animator;
 
     public Health Health;
+
+    [SerializeField] private LayerMask _allyMask;
+
+    private bool _isAllyTarget = false;
+
+    private bool _isAttackable = true;
 
     public float saldiriMesafesi = 2f; // Saldýrý mesafesi
     public float saldiriZamani = 1f; // Saldýrý zaman aralýðý
@@ -24,35 +32,82 @@ public class Enemy : MonoBehaviour
         Health = GetComponent<Health>();
         hedefNokta = EnemyController.Instance.enemyTargetPoint;
         sonSaldiriZamani = Time.time; // Baþlangýçta son saldýrý zamanýný ayarla
+
+        StartCoroutine(CO_CheckAlly());
+
+        agent.SetDestination(hedefNokta.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
+
     }
 
     private void Update()
     {
-        agent.SetDestination(hedefNokta.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
-        if (agent.remainingDistance <= saldiriMesafesi && Time.time >= sonSaldiriZamani + saldiriZamani)
+        if (agent.remainingDistance <= saldiriMesafesi && _isAttackable)
         {
             Saldýr();
-            sonSaldiriZamani = Time.time; // Saldýrý yapýldýðýnda son saldýrý zamanýný güncelle
+            StartCoroutine(CO_AttackTimer());
+            //sonSaldiriZamani = Time.time; // Saldýrý yapýldýðýnda son saldýrý zamanýný güncelle
         }
-
     }
 
+    private IEnumerator CO_AttackTimer()
+    {
+        _isAttackable = false;
+        yield return new WaitForSeconds(saldiriZamani);
+        _isAttackable = true;
+    }
+
+    private IEnumerator CO_CheckAlly()
+    {
+        yield return new WaitForSeconds(.4f);
+        CheckAlly();
+
+        StartCoroutine(CO_CheckAlly());
+    }
+
+    private void CheckAlly()
+    {
+        if (_isAllyTarget)
+        {
+            return;
+        }
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f,_allyMask);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            Debug.Log("Ally algýlandý");
+            hedefNokta = hitCollider.transform;
+            _isAllyTarget = true;
+            agent.SetDestination(hedefNokta.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
+            break;
+        }
+    }
+
+
+
+    //Distance Check
+    private Health targetHealth;
     private void Saldýr()
     {
-        // Hedefe hasar verme iþlemleri burada gerçekleþtirilebilir
-        // Örneðin, hedefin bir Health bileþeni varsa, onun ReduceHealth() metodu kullanýlabilir
-        Health hedefHealth = hedefNokta.GetComponent<Health>();
-        if (hedefHealth != null)
+        targetHealth = hedefNokta.GetComponent<Health>();
+        if (targetHealth != null)
         {
             //hedefHealth.ReduceHealth(saldiriGucu);
+            transform.LookAt(hedefNokta);
+            animator.SetTrigger("Attack");
             Debug.Log("Hedefe saldýrý yapýldý! Hasar: " + saldiriGucu);
         }
         else
         {
-            animator.SetTrigger("Attack");
             Debug.Log("Hedefe Hasar: " + saldiriGucu);
         }
     }
 
- 
+    public void GiveDamage()
+    {
+        targetHealth.ReduceHealth(saldiriGucu);
+
+    }
+
+
 }

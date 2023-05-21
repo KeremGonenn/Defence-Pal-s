@@ -7,6 +7,13 @@ public class Health : MonoBehaviour
     //[SerializeField] private float _health;
     [SerializeField] private float _healthValue;
 
+    private Enemy _enemy;
+
+    private void Start()
+    {
+        _enemy = GetComponent<Enemy>();
+    }
+
     public float GetHealth()
     {
         return _healthValue;
@@ -18,7 +25,10 @@ public class Health : MonoBehaviour
 
         if(_healthValue <= 0)
         {
-            EnemyDetector.Instance.GetEnemies().Remove(GetComponent<Enemy>());
+            if (_enemy != null)
+            {
+                EnemyDetector.Instance.GetEnemies().Remove(GetComponent<Enemy>());
+            }
             Destroy(gameObject);
         }
 

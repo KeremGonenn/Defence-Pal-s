@@ -132,7 +132,7 @@ MonoBehaviour:
   _enemyDetector: {fileID: 0}
   _checkTimer: 0.2
   _bullet: {fileID: 9010764543143029204, guid: a010a97f7c020f345835acc6f2bcc71e, type: 3}
-  _shootPoint: {fileID: 4269029943765254}
+  _shootPoint: {fileID: 855339523}
   _damage: 5
   _targetEnemy: {fileID: 0}
   _attackTimer: 2
