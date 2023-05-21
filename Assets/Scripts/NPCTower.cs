@@ -77,12 +77,10 @@ public class NPCTower : MonoBehaviour
                 {
                     _targetEnemy.ReduceHealth(_damage);
 
-                    Debug.Log("31");
-
                     if (_targetEnemy.GetHealth() <= 0)
                     {
                         _enemyDetector.GetEnemies().RemoveAt(index);
-                        Destroy(_targetEnemy);
+                        Destroy(_targetEnemy.gameObject);
                     }
                 }
             });
