@@ -73,15 +73,15 @@ public class NPCTower : MonoBehaviour
             var bullet = Instantiate(_bullet, _shootPoint.position, Quaternion.identity);
             bullet.transform.DOMove(_targetEnemy.transform.position, .5f).OnComplete(() =>
             {
-                if(_targetEnemy.GetHealth() > 0)
+                if(_targetEnemy.Health.GetHealth() > 0)
                 {
-                    _targetEnemy.ReduceHealth(_damage);
+                    _targetEnemy.Health.ReduceHealth(_damage);
 
-                    if (_targetEnemy.GetHealth() <= 0)
-                    {
-                        _enemyDetector.GetEnemies().RemoveAt(index);
-                        Destroy(_targetEnemy.gameObject);
-                    }
+                    //if (_targetEnemy.Health.GetHealth() <= 0)
+                    //{
+                    //    _enemyDetector.GetEnemies().RemoveAt(index);
+                    //    Destroy(_targetEnemy.gameObject);
+                    //}
                 }
             });
             StartCoroutine(SetAttackableState());

@@ -11,13 +11,19 @@ public class Shooter : MonoBehaviour
 
     [SerializeField] private float _velocityMultiple;
 
+    private bool _isShootable = true;
+
+    [SerializeField] private float _shootTimer;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _isShootable)
         {
             var ball = SpawnBall(_spawnPoint.position);
 
             MoveToTarget(ball.GetComponent<Rigidbody>(),new Vector3(_projectile.velocity.x, _projectile.velocity.y, _projectile.velocity.z * _velocityMultiple));
+
+            StartCoroutine(SetIsShootable());
         }
     }
 
@@ -32,5 +38,13 @@ public class Shooter : MonoBehaviour
     {
         ball.velocity = velocity;
     }
+
+    private IEnumerator SetIsShootable()
+    {
+        _isShootable = false;
+        yield return new WaitForSeconds(_shootTimer);
+        _isShootable = true;
+    }
+
 
 }

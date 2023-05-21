@@ -129,11 +129,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionEffect: {fileID: 2626559139361218663}
-  _explosionRadius: 0
+  _explosionRadius: 2
   _interactableLayer:
     serializedVersion: 2
-    m_Bits: 0
-  _damage: 0
+    m_Bits: 128
+  _damage: 500
 --- !u!1001 &2003307346998753759
 PrefabInstance:
   m_ObjectHideFlags: 0
