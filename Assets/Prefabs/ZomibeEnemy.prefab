@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 6903469382853695646}
   - component: {fileID: 6903469382853695641}
   - component: {fileID: 2828603820879145392}
-  - component: {fileID: 6504480856303181355}
+  - component: {fileID: 548843735689958856}
   m_Layer: 7
   m_Name: ZomibeEnemy
   m_TagString: Enemy
@@ -800,19 +800,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthValue: 100
---- !u!135 &6504480856303181355
-SphereCollider:
+--- !u!136 &548843735689958856
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6902696096021444982}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.24
-  m_Center: {x: 0, y: 0.51, z: 0}
+  m_Radius: 0.27701545
+  m_Height: 1.0388981
+  m_Direction: 1
+  m_Center: {x: -0.011093378, y: 0.50229436, z: -0}
 --- !u!1 &6902708935759542420
 GameObject:
   m_ObjectHideFlags: 0
