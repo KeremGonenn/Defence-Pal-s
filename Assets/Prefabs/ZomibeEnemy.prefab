@@ -762,6 +762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hedefNokta: {fileID: 0}
   isTargetable: 0
+  Health: {fileID: 0}
   saldiriMesafesi: 2
   saldiriZamani: 1
   saldiriGucu: 10
@@ -799,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2ded710f175984f9e562181b436796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthValue: 100
+  _healthValue: 0
 --- !u!136 &548843735689958856
 CapsuleCollider:
   m_ObjectHideFlags: 0
