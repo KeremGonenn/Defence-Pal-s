@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour
 
     public bool isTargetable;
     private Animator animator;
-    private Health _health;
+
+    public Health Health;
 
     public float saldiriMesafesi = 2f; // Saldýrý mesafesi
     public float saldiriZamani = 1f; // Saldýrý zaman aralýðý
@@ -20,7 +21,7 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
         hedefNokta = EnemyController.Instance.enemyTargetPoint;
         sonSaldiriZamani = Time.time; // Baþlangýçta son saldýrý zamanýný ayarla
     }
@@ -53,14 +54,5 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public float GetHealth()
-    {
-        return _health.HealthValue;
-    }
-
-    public void ReduceHealth(float value)
-    {
-        _health.HealthValue -= value;
-
-    }
+ 
 }

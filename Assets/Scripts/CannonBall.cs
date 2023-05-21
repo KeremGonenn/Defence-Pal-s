@@ -8,6 +8,8 @@ public class CannonBall : MonoBehaviour
     [SerializeField] private float _explosionRadius;
     [SerializeField] private LayerMask _interactableLayer;
     [SerializeField] private float _damage;
+    
+
     private void Start()
     {
         StartCoroutine(CheckOnGround());
@@ -37,7 +39,10 @@ public class CannonBall : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explosionRadius, _interactableLayer);
         foreach (var hitCollider in hitColliders)
         {
-            //Düþmanýn health scriptine eriþ ve damage ver.
+            if(hitCollider.TryGetComponent(out Health enemyHealth))
+            {
+                enemyHealth.ReduceHealth(_damage);
+            }
         }
     }
 }
