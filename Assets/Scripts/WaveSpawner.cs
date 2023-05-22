@@ -78,14 +78,14 @@ public class WaveSpawner : MonoBehaviour
         if (searchCountdown <= 0f)
         {
             searchCountdown = 1f;
-            //Warning
-            if (GameObject.FindGameObjectsWithTag("Enemy") == null)
+
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if (enemies.Length == 0)
             {
                 return false;
             }
         }
         return true;
-
     }
     IEnumerator SpawnWave(Wave _wave)
     {
