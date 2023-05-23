@@ -34,6 +34,10 @@ public class CannonBall : MonoBehaviour
         Destroy(gameObject,0.2f);
     }
 
+    public void SetDamage(float damageValue)
+    {
+        _damage += damageValue;
+    }
     private void GiveDamage()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explosionRadius, _interactableLayer);

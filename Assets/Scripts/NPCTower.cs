@@ -99,4 +99,14 @@ public class NPCTower : MonoBehaviour
         yield return new WaitForSeconds(_attackTimer);
         _isAttackable = true;
     }
+
+    public void ReducecAttackTime(float timer)
+    {
+        _attackTimer -= timer;
+        if (_attackTimer <= .1f)
+        {
+            _attackTimer = 0.1f;
+        }
+    }
+
 }

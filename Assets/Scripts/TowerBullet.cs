@@ -6,17 +6,20 @@ public class TowerBullet : MonoBehaviour
 {
     private Enemy _target;
 
-    private float _damage;
+    [SerializeField] private float _damage;
 
     [SerializeField] private float _speed;
 
     public void Initialize(Enemy target,float damage)
     {
         _target = target;
-        _damage = damage;
+       // _damage = damage;
     }
 
-
+    public void SetDamage(float damageValue)
+    {
+        _damage += damageValue;
+    }
     private void Update()
     {
         if (_target != null)
