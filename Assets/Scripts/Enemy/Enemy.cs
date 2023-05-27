@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class Enemy : MonoBehaviour
     public float saldiriGucu = 10f; // Saldýrý gücü
     private float sonSaldiriZamani; // Son saldýrý zamaný
 
+    [SerializeField] private List<ParticleSystem> bloodEffects;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -37,6 +40,14 @@ public class Enemy : MonoBehaviour
 
         agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
 
+    }
+
+    public void PlayBloodParticle()
+    {
+        foreach (var item in bloodEffects)
+        {
+            item.Play();
+        }
     }
 
     private void Update()

@@ -29,6 +29,7 @@ public class TowerBullet : MonoBehaviour
             if(Vector3.Distance(transform.position,_target.transform.position) < .075f)
             {
                 _target.Health.ReduceHealth(_damage);
+                _target.PlayBloodParticle();
                 Destroy(gameObject);
             }
         }
