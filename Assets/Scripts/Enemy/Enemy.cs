@@ -26,7 +26,8 @@ public class Enemy : MonoBehaviour
     public float saldiriGucu = 10f; // Saldýrý gücü
     private float sonSaldiriZamani; // Son saldýrý zamaný
 
-    [SerializeField] private List<ParticleSystem> bloodEffects;
+    [SerializeField] private List<ParticleSystem> _bloodEffects;
+    [SerializeField] private List<ParticleSystem> _deathEffects;
 
     private void Start()
     {
@@ -44,7 +45,16 @@ public class Enemy : MonoBehaviour
 
     public void PlayBloodParticle()
     {
-        foreach (var item in bloodEffects)
+        foreach (var item in _bloodEffects)
+        {
+            item.Play();
+        }
+    }
+
+    public void PlayDeathParticle()
+    {
+        _deathEffects[0].gameObject.transform.parent = null;
+        foreach (var item in _deathEffects)
         {
             item.Play();
         }

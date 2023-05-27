@@ -27,6 +27,7 @@ public class Health : MonoBehaviour
         {
             if (_enemy != null)
             {
+                _enemy.PlayDeathParticle();
                 EnemyDetector.Instance.GetEnemies().Remove(GetComponent<Enemy>());
             }
                 Destroy(gameObject);

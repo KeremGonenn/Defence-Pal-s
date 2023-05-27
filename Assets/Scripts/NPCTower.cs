@@ -81,7 +81,7 @@ public class NPCTower : MonoBehaviour
             _isAttackable = false;
 
             _turret.transform.rotation = Quaternion.Euler(new Vector3(_turret.transform.rotation.x,
-                (_targetEnemy.transform.position.x - _turret.transform.position.x) * 10f,
+                (_targetEnemy.transform.position.x - _turret.transform.position.x) * 15f,
                 _turret.transform.rotation.z));
 
             var bullet = Instantiate(_bullet, _shootPoint.position, Quaternion.identity);
