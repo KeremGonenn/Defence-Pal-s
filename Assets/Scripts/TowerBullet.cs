@@ -32,5 +32,9 @@ public class TowerBullet : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

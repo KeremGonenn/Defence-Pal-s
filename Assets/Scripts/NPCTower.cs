@@ -19,8 +19,17 @@ public class NPCTower : MonoBehaviour
 
     [SerializeField] private float _attackTimer;
 
+    [SerializeField] private Transform _turret;
+
+    private ParticleSystem _shootEffect;
+
     private bool _isAttackable = true;
-     
+
+    private void Awake()
+    {
+        _shootEffect = GetComponentInChildren<ParticleSystem>();
+    }
+
     private void Start()
     {
         StartCoroutine(CheckEnemies());
@@ -70,24 +79,18 @@ public class NPCTower : MonoBehaviour
         if (_targetEnemy != null && _isAttackable)
         {
             _isAttackable = false;
+
+            _turret.transform.rotation = Quaternion.Euler(new Vector3(_turret.transform.rotation.x,
+                (_targetEnemy.transform.position.x - _turret.transform.position.x) * 10f,
+                _turret.transform.rotation.z));
+
             var bullet = Instantiate(_bullet, _shootPoint.position, Quaternion.identity);
 
             bullet.GetComponent<TowerBullet>().Initialize(_targetEnemy,_damage);
-                           
-            //bullet.transform.DOMove(_targetEnemy.transform.position, .5f).OnComplete(() =>
-            //{
-            //    if(_targetEnemy.Health.GetHealth() > 0)
-            //    {
-            //        _targetEnemy.Health.ReduceHealth(_damage);
 
-            //        //if (_targetEnemy.Health.GetHealth() <= 0)
-            //        //{
-            //        //    _enemyDetector.GetEnemies().RemoveAt(index);
-            //        //    Destroy(_targetEnemy.gameObject);
-            //        //}
-            //    }
-            //});
-            StartCoroutine(SetAttackableState());
+            _shootEffect.Play();
+
+            StartCoroutine(SetAttackableState()); 
 
         }
         StartCoroutine(CheckEnemies());
