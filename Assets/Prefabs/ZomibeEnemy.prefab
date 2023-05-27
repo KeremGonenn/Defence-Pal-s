@@ -760,15 +760,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32924c1dbfbbc2748ba8e1e8bef3e2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hedefNokta: {fileID: 0}
+  _targetPoint: {fileID: 0}
   isTargetable: 0
   Health: {fileID: 0}
   _allyMask:
     serializedVersion: 2
     m_Bits: 256
-  saldiriMesafesi: 0.5
+  saldiriMesafesi: 1
   saldiriZamani: 1
-  saldiriGucu: 100
+  saldiriGucu: 20
 --- !u!195 &6903469382853695641
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -803,7 +803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2ded710f175984f9e562181b436796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthValue: 0
+  _healthValue: 50
 --- !u!136 &548843735689958856
 CapsuleCollider:
   m_ObjectHideFlags: 0

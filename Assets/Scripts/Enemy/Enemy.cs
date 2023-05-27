@@ -46,9 +46,14 @@ public class Enemy : MonoBehaviour
             MoveToCastle();
             return;
         }
+        else
+        {
+            agent.SetDestination(_targetPoint.position);
+        }
 
         if (agent.remainingDistance <= saldiriMesafesi && _isAttackable)
         {
+            Debug.Log("xx");
             Saldýr();
             StartCoroutine(CO_AttackTimer());
             //sonSaldiriZamani = Time.time; // Saldýrý yapýldýðýnda son saldýrý zamanýný güncelle
@@ -64,7 +69,7 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator CO_CheckAlly()
     {
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.1f);
         CheckAlly();
 
         StartCoroutine(CO_CheckAlly());
@@ -82,7 +87,7 @@ public class Enemy : MonoBehaviour
         foreach (var hitCollider in hitColliders)
         {
             Debug.Log("Ally algýlandý");
-            _targetPoint = hitCollider.transform;
+            _targetPoint = hitCollider.gameObject.transform;
             _isAllyTarget = true;
             agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
             break;
@@ -111,17 +116,18 @@ public class Enemy : MonoBehaviour
 
     public void GiveDamage()
     {
-
         if (targetHealth != null)
         {
             targetHealth.ReduceHealth(saldiriGucu);
             if (targetHealth.GetHealth() <= 0)
             {
+                _isAllyTarget = false;
                 MoveToCastle();
             }
         }
         else
         {
+            _isAllyTarget = false;
             MoveToCastle();
         }
     }

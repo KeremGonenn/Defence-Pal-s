@@ -47,6 +47,12 @@ public class SoldierAttack : MonoBehaviour
         {
             return;
         }
+        else
+        {
+            agent.SetDestination(_targetPoint.position);
+
+        }
+
 
         if (agent.remainingDistance <= saldiriMesafesi && _isAttackable)
         {
@@ -65,7 +71,7 @@ public class SoldierAttack : MonoBehaviour
 
     private IEnumerator CO_CheckAlly()
     {
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.1f);
         CheckAlly();
 
         StartCoroutine(CO_CheckAlly());
@@ -101,8 +107,9 @@ public class SoldierAttack : MonoBehaviour
         foreach (var hitCollider in hitColliders)
         {
             Debug.Log("Enemy algýlandý");
-            _targetPoint = hitCollider.transform;
+            _targetPoint = hitCollider.gameObject.transform;
             _isEnemyTarget = true;
+            currentPatrolPoint.IsEmpty = true;
             agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
             break;
         }
@@ -127,7 +134,17 @@ public class SoldierAttack : MonoBehaviour
 
     public void GiveDamage()
     {
-        targetHealth.ReduceHealth(saldiriGucu);
-
+        if(targetHealth != null)
+        {
+            targetHealth.ReduceHealth(saldiriGucu);
+            if(targetHealth.GetHealth() <= 0)
+            {
+                _isEnemyTarget = false;
+            }
+        }
+        else
+        {
+            _isEnemyTarget = false;
+        }
     }
 }
