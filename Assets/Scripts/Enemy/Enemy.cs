@@ -5,7 +5,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
-    public Transform hedefNokta; // Belirlediðiniz hedef noktanýn referansý
+    public Transform _targetPoint; // Belirlediðiniz hedef noktanýn referansý
 
     private NavMeshAgent agent; // Navigation Mesh Agent bileþeni
 
@@ -30,17 +30,23 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         Health = GetComponent<Health>();
-        hedefNokta = EnemyController.Instance.enemyTargetPoint;
+        _targetPoint = EnemyController.Instance.enemyTargetPoint;
         sonSaldiriZamani = Time.time; // Baþlangýçta son saldýrý zamanýný ayarla
 
         StartCoroutine(CO_CheckAlly());
 
-        agent.SetDestination(hedefNokta.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
+        agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
 
     }
 
     private void Update()
     {
+        if (_targetPoint == null)
+        {
+            MoveToCastle();
+            return;
+        }
+
         if (agent.remainingDistance <= saldiriMesafesi && _isAttackable)
         {
             Saldýr();
@@ -71,14 +77,14 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f,_allyMask);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f, _allyMask);
 
         foreach (var hitCollider in hitColliders)
         {
             Debug.Log("Ally algýlandý");
-            hedefNokta = hitCollider.transform;
+            _targetPoint = hitCollider.transform;
             _isAllyTarget = true;
-            agent.SetDestination(hedefNokta.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
+            agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
             break;
         }
     }
@@ -89,11 +95,11 @@ public class Enemy : MonoBehaviour
     private Health targetHealth;
     private void Saldýr()
     {
-        targetHealth = hedefNokta.GetComponent<Health>();
+        targetHealth = _targetPoint.GetComponent<Health>();
         if (targetHealth != null)
         {
             //hedefHealth.ReduceHealth(saldiriGucu);
-            transform.LookAt(hedefNokta);
+            transform.LookAt(_targetPoint);
             animator.SetTrigger("Attack");
             Debug.Log("Hedefe saldýrý yapýldý! Hasar: " + saldiriGucu);
         }
@@ -105,8 +111,25 @@ public class Enemy : MonoBehaviour
 
     public void GiveDamage()
     {
-        targetHealth.ReduceHealth(saldiriGucu);
 
+        if (targetHealth != null)
+        {
+            targetHealth.ReduceHealth(saldiriGucu);
+            if (targetHealth.GetHealth() <= 0)
+            {
+                MoveToCastle();
+            }
+        }
+        else
+        {
+            MoveToCastle();
+        }
+    }
+
+    private void MoveToCastle()
+    {
+        _targetPoint = EnemyController.Instance.enemyTargetPoint;
+        agent.SetDestination(_targetPoint.position);
     }
 
 

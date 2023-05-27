@@ -10,29 +10,29 @@ public class CannonBall : MonoBehaviour
     [SerializeField] private float _damage;
     
 
-    private void Start()
+    private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(CheckOnGround());
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            if (_explosionEffect != null)
+            {
+                _explosionEffect.SetActive(true);
+                _explosionEffect.transform.parent = null;
+            }
+
+            GiveDamage();
+
+            Destroy(gameObject, 0.2f);
+        }
     }
 
-    private IEnumerator CheckOnGround()
-    {
-        while (transform.position.y >= 0.15)
-        {
-            yield return null;
-        }
-        
-        if(_explosionEffect != null)
-        {
-            _explosionEffect.SetActive(true);
-            _explosionEffect.transform.parent = null;
-        }
-    
-
-        GiveDamage();
-
-        Destroy(gameObject,0.2f);
-    }
+    //private IEnumerator CheckOnGround()
+    //{
+    //    while (transform.position.y >= )
+    //    {
+    //        yield return null;
+    //    }
+    //}
 
     public void SetDamage(float damageValue)
     {

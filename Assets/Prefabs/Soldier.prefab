@@ -2281,6 +2281,7 @@ GameObject:
   - component: {fileID: 9181153982511158332}
   - component: {fileID: 6998951426359958922}
   - component: {fileID: -7389191178194983220}
+  - component: {fileID: -680682042156896176}
   m_Layer: 8
   m_Name: Soldier
   m_TagString: Soldier
@@ -2390,6 +2391,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthValue: 50
+--- !u!114 &-680682042156896176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6214926178884743186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f212965236dd3142b4741dca587521d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetPoint: {fileID: 0}
+  isTargetable: 0
+  Health: {fileID: -7389191178194983220}
+  currentPatrolPoint:
+    IsEmpty: 0
+    Point: {fileID: 0}
+  _enemyMask:
+    serializedVersion: 2
+    m_Bits: 128
+  saldiriMesafesi: 0.5
+  saldiriZamani: 1
+  saldiriGucu: 10
 --- !u!1 &6214935646033863080
 GameObject:
   m_ObjectHideFlags: 0

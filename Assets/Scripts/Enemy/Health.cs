@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
             {
                 EnemyDetector.Instance.GetEnemies().Remove(GetComponent<Enemy>());
             }
-            Destroy(gameObject);
+                Destroy(gameObject);
         }
 
     }

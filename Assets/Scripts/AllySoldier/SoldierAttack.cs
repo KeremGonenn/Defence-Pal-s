@@ -1,73 +1,133 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SoldierAttack : MonoBehaviour
 {
-    public float detectionRadius = 10f; // Düþmaný tespit etmek için kullanýlan algýlama yarýçapý
-    public float attackRange = 2f; // Saldýrý mesafesi
+    public Transform _targetPoint; // Belirlediðiniz hedef noktanýn referansý
 
+    private NavMeshAgent agent; // Navigation Mesh Agent bileþeni
+
+    public bool isTargetable;
     private Animator animator;
-    private bool isAttacking = false;
-    private Transform target;
+
+    public Health Health;
+
+    public PatrolPoint currentPatrolPoint;
+
+    [SerializeField] private LayerMask _enemyMask;
+
+    private bool _isEnemyTarget = false;
+
+    private bool _isAttackable = true;
+
+    public float saldiriMesafesi = 1f; // Saldýrý mesafesi
+    public float saldiriZamani = 1f; // Saldýrý zaman aralýðý
+    public float saldiriGucu = 10f; // Saldýrý gücü
+    private float sonSaldiriZamani; // Son saldýrý zamaný
 
     private void Start()
     {
+        //_targetPoint = AllysPatrol.Instance.GetEmptyPoint(this);
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        Health = GetComponent<Health>();
+        //sonSaldiriZamani = Time.time; // Baþlangýçta son saldýrý zamanýný ayarla
+
+        StartCoroutine(CO_CheckAlly());
+
+        //agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
+
     }
 
     private void Update()
     {
-        if (!isAttacking)
+        if(_targetPoint == null)
         {
-            if (target == null)
-            {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
+            return;
+        }
 
-                foreach (Collider collider in colliders)
-                {
-                    if (collider.CompareTag("Enemy"))
-                    {
-                        // Düþman tespit edildi, hedef olarak belirle
-                        target = collider.transform;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                float distance = Vector3.Distance(transform.position, target.position);
-
-                if (distance <= attackRange)
-                {
-                    // Saldýrý mesafesine gelindi, saldýrý animasyonunu çalýþtýr
-                    Attack();
-                }
-            }
+        if (agent.remainingDistance <= saldiriMesafesi && _isAttackable)
+        {
+            Saldýr();
+            StartCoroutine(CO_AttackTimer());
+            //sonSaldiriZamani = Time.time; // Saldýrý yapýldýðýnda son saldýrý zamanýný güncelle
         }
     }
 
-    private void Attack()
+    private IEnumerator CO_AttackTimer()
     {
-        isAttacking = true;
-        animator.SetTrigger("Attack");
+        _isAttackable = false;
+        yield return new WaitForSeconds(saldiriZamani);
+        _isAttackable = true;
+    }
 
-        // Saldýrý animasyonunun süresini alarak animasyonun tamamlanmasýný bekler
-        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-        foreach (AnimationClip clip in clips)
+    private IEnumerator CO_CheckAlly()
+    {
+        yield return new WaitForSeconds(.4f);
+        CheckAlly();
+
+        StartCoroutine(CO_CheckAlly());
+    }
+
+    private void CheckAlly()
+    {
+        if (_isEnemyTarget)
         {
-            if (clip.name == "Attack")
-            {
-                StartCoroutine(ResetAttackState(clip.length));
-                break;
-            }
+            return;
+        }
+
+        HandleOverlapSphere();
+
+        //if (!_isEnemyTarget)
+        //{
+        //    bool isPatrol;
+        //    int value = Random.Range(0, 2);
+        //    isPatrol =  value == 0 ? true : false;
+
+        //    if (isPatrol)
+        //    {
+        //        _targetPoint = AllysPatrol.Instance.GetEmptyPoint(this);
+        //    }
+
+        //}
+    }
+
+    private void HandleOverlapSphere()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f, _enemyMask);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            Debug.Log("Enemy algýlandý");
+            _targetPoint = hitCollider.transform;
+            _isEnemyTarget = true;
+            agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
+            break;
         }
     }
 
-    private IEnumerator ResetAttackState(float duration)
+    private Health targetHealth;
+    private void Saldýr()
     {
-        yield return new WaitForSeconds(duration);
+        targetHealth = _targetPoint.GetComponent<Health>();
+        if (targetHealth != null)
+        {
+            //hedefHealth.ReduceHealth(saldiriGucu);
+            transform.LookAt(_targetPoint);
+            animator.SetTrigger("Attack");
+            Debug.Log("Hedefe saldýrý yapýldý! Hasar: " + saldiriGucu);
+        }
+        else
+        {
+            Debug.Log("Hedefe Hasar: " + saldiriGucu);
+        }
+    }
 
-        isAttacking = false;
+    public void GiveDamage()
+    {
+        targetHealth.ReduceHealth(saldiriGucu);
+
     }
 }
