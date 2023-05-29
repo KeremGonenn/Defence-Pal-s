@@ -10,7 +10,7 @@ public class GoldManager : MonoBehaviour
     public static GoldManager Instance;
     public TMP_Text goldText;
 
-    public void Start()
+    public void Update()
     {
         UpdateGoldUI();
     }
