@@ -132,6 +132,8 @@ public class SoldierAttack : MonoBehaviour
         }
     }
 
+
+
     public void GiveDamage()
     {
         if(targetHealth != null)
