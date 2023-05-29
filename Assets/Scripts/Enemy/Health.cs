@@ -9,6 +9,8 @@ public class Health : MonoBehaviour
 
     private Enemy _enemy;
 
+    public int goldValue = 10;
+    public GoldManager goldManager;
     private void Start()
     {
         _enemy = GetComponent<Enemy>();
@@ -27,10 +29,12 @@ public class Health : MonoBehaviour
         {
             if (_enemy != null)
             {
+                GoldManager.Instance.AddGold(goldValue);
                 _enemy.PlayDeathParticle();
                 EnemyDetector.Instance.GetEnemies().Remove(GetComponent<Enemy>());
             }
-                Destroy(gameObject);
+
+            Destroy(gameObject);
         }
 
     }

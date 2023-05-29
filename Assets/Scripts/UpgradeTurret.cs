@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class Tower : MonoBehaviour
 {
-    
-
-
     public int gold;
 }
 
