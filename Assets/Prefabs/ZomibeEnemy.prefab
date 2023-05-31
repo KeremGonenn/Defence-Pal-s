@@ -15282,6 +15282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthValue: 50
+  goldValue: 10
+  goldManager: {fileID: 0}
 --- !u!136 &548843735689958856
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class Health : MonoBehaviour
         {
             if (_enemy != null)
             {
+                //FindObjectOfType<AudioManager>().Play("BlastSound");
                 GoldManager.Instance.AddGold(goldValue);
                 _enemy.PlayDeathParticle();
                 EnemyDetector.Instance.GetEnemies().Remove(GetComponent<Enemy>());
