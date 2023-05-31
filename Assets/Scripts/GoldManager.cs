@@ -21,7 +21,7 @@ public class GoldManager : MonoBehaviour
     }
     public void UpdateGoldUI()
     {
-        goldText.text = "Gold: " + gold.ToString();
+        goldText.text = gold.ToString();
     }
     private void Awake()
     {
