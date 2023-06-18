@@ -5,8 +5,9 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     
-    public Sound[] sounds;
+    public Sound[] musicSounds,sfxSounds;
     public static AudioManager instance;
+    public AudioSource musicSource,sfxSource;
     private void Awake()
     {
         if (instance == null)
@@ -20,31 +21,53 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
 
-        foreach (Sound s in sounds)
-        {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
-        }
+        //AudioManager.Instance.PlaySFX("");
     }
 
     private void Start()
     {
-        Play("GameMusic");
+        PlayMusic("GameMusic");
     }
 
-    public void Play(string name)
+    public void PlayMusic(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(musicSounds, sound => sound.name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + "not found !");
             return;
         }
-            
-        s.source.Play();
+
+        else
+        {
+            musicSource.clip = s.clip;
+            musicSource.Play();
+        }
+    }
+
+    public void PlaySFX(string name)
+    {
+        Sound s = Array.Find(sfxSounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + name + "not found !");
+            return;
+        }
+
+        else
+        {
+            sfxSource.clip = s.clip;
+            sfxSource.Play();
+        }
+    }
+
+    public void MusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+    }
+
+    public void SFXVolume(float volume)
+    {
+        sfxSource.volume = volume;
     }
 }
