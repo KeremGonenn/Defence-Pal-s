@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -28,6 +29,16 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private List<ParticleSystem> _bloodEffects;
     [SerializeField] private List<ParticleSystem> _deathEffects;
+    [SerializeField] private GameObject _starImage;
+
+    private bool _isSpeacial;
+    private void OnDisable()
+    {
+        if (_isSpeacial)
+        {
+            SkillUIController.Instance.OpenSpecialPowerUI();
+        }
+    }
 
     private void Start()
     {
@@ -41,6 +52,12 @@ public class Enemy : MonoBehaviour
 
         agent.SetDestination(_targetPoint.position); // Hedef noktaya doðru ilerleme baþlatýlýyor
 
+        int random = Random.Range(0, 6);
+        if (random == 3)
+        {
+            _starImage.SetActive(true);
+            _isSpeacial = true;
+        }
     }
 
     public void PlayBloodParticle()
@@ -137,6 +154,8 @@ public class Enemy : MonoBehaviour
 
     public void GiveDamage()
     {
+
+
         if (targetHealth != null)
         {
             targetHealth.ReduceHealth(saldiriGucu);
@@ -156,7 +175,11 @@ public class Enemy : MonoBehaviour
     private void MoveToCastle()
     {
         _targetPoint = EnemyController.Instance.enemyTargetPoint;
-        agent.SetDestination(_targetPoint.position);
+        if(_targetPoint != null)
+        {
+            agent.SetDestination(_targetPoint.position);
+
+        }
     }
 
 

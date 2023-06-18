@@ -86,18 +86,6 @@ public class SoldierAttack : MonoBehaviour
 
         HandleOverlapSphere();
 
-        //if (!_isEnemyTarget)
-        //{
-        //    bool isPatrol;
-        //    int value = Random.Range(0, 2);
-        //    isPatrol =  value == 0 ? true : false;
-
-        //    if (isPatrol)
-        //    {
-        //        _targetPoint = AllysPatrol.Instance.GetEmptyPoint(this);
-        //    }
-
-        //}
     }
 
     private void HandleOverlapSphere()

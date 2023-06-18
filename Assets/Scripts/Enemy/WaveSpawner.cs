@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -16,6 +17,8 @@ public class WaveSpawner : MonoBehaviour
     }
     public Wave[] waves;
     private int nextWave = 0;
+
+    [SerializeField] private TMP_Text _waveCount;
 
     public Transform[] spawnPoints;
 
@@ -56,9 +59,11 @@ public class WaveSpawner : MonoBehaviour
             waveCountdown -= Time.deltaTime;
         }
     }
-
+    int index = 1;
     void WaveCompleted()
     {
+        index++;
+        _waveCount.text = "Dalga : " + index;
         state = SpawnState.COUNTING;
         waveCountdown = timeBetweenWaves;
         if (nextWave + 1 > waves.Length - 1)

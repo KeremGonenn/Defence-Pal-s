@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,5 +9,7 @@ public class SkillData : ScriptableObject
     public string Header;
     public Sprite SkillImage;
     public string Description;
+    public SkillEnums SkillEnums;
+    public GameObject Particles;
     public UnityEvent Event;
 }

@@ -20,19 +20,19 @@ public class CannonBall : MonoBehaviour
                 _explosionEffect.transform.parent = null;
             }
 
+
+            if (SkillSystem.Instance.skillEnums == SkillEnums.BallExplosion)
+            {
+                SkillFunctions.Instance.skillPrefab.SkillPosition = transform.position;
+                SkillSystem.Instance.ExecuteSkill();
+                SkillSystem.Instance.skillEnums = SkillEnums.None;
+            }
+
             GiveDamage();
 
             Destroy(gameObject, 0.2f);
         }
     }
-
-    //private IEnumerator CheckOnGround()
-    //{
-    //    while (transform.position.y >= )
-    //    {
-    //        yield return null;
-    //    }
-    //}
 
     public void SetDamage(float damageValue)
     {

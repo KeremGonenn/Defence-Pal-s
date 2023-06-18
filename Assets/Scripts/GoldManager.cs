@@ -10,10 +10,11 @@ public class GoldManager : MonoBehaviour
     public static GoldManager Instance;
     public TMP_Text goldText;
 
-    public void Update()
+    private void Start()
     {
         UpdateGoldUI();
     }
+
     public void AddGold(int amount)
     {
         gold += amount;
@@ -23,11 +24,16 @@ public class GoldManager : MonoBehaviour
     {
         goldText.text = gold.ToString();
     }
+
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
+        }
+        else
+        {
+            Destroy(this);
         }
     }
 

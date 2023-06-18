@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,13 +26,25 @@ public class UpgradeTurret : MonoBehaviour
     public float attackSpeed;
     public float range;
 
-    [SerializeField] private int damageUpgradeCost = 100; 
+    [SerializeField] private int damageUpgradeCost = 100;
     [SerializeField] private int speedUpgradeCost = 100;
     [SerializeField] private int rangeUpgradeCost = 100;
 
     [SerializeField] private int damageUpgradeCostMultiple = 100;
     [SerializeField] private int speedUpgradeCostMultiple = 100;
     [SerializeField] private int rangeUpgradeCostMultiple = 100;
+
+    [SerializeField] private TMP_Text _damageText;
+    [SerializeField] private TMP_Text _attackSpeedText;
+    [SerializeField] private TMP_Text _rangeText;
+
+    private void Start()
+    {
+        _damageText.text = damageUpgradeCost.ToString() + " $";
+        _attackSpeedText.text = speedUpgradeCost.ToString()+" $";
+        _rangeText.text = rangeUpgradeCost.ToString() + " $";
+
+    }
 
     public void UpgradeDamage()
     {
@@ -40,8 +53,10 @@ public class UpgradeTurret : MonoBehaviour
             towerBullet.SetDamage(damage);
             cannonBall.SetDamage(damage);
             GoldManager.Instance.gold -= damageUpgradeCost;
+            GoldManager.Instance.UpdateGoldUI();
 
             damageUpgradeCost *= damageUpgradeCostMultiple;
+            _damageText.text = damageUpgradeCost.ToString() +" $";
         }
     }
 
@@ -54,8 +69,10 @@ public class UpgradeTurret : MonoBehaviour
                 item.ReducecAttackTime(attackSpeed);
             }
             GoldManager.Instance.gold -= speedUpgradeCost;
+            GoldManager.Instance.UpdateGoldUI();
 
             speedUpgradeCost *= speedUpgradeCostMultiple;
+            _attackSpeedText.text = speedUpgradeCost.ToString() + " $";
         }
     }
 
@@ -65,8 +82,10 @@ public class UpgradeTurret : MonoBehaviour
         {
             enemyDetector.transform.localScale *= range;
             GoldManager.Instance.gold -= rangeUpgradeCost;
+            GoldManager.Instance.UpdateGoldUI();
 
             rangeUpgradeCost *= rangeUpgradeCostMultiple;
+            _rangeText.text = rangeUpgradeCost.ToString() + " $";
         }
     }
 }
