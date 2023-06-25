@@ -28,6 +28,7 @@ public class Shooter : MonoBehaviour
         {
             if (!SkillFunctions.Instance.IsThreeBall)
             {
+                AudioManager.instance.PlaySFX("MainTower");
                 SpawnBall();
             }
             else
@@ -47,6 +48,24 @@ public class Shooter : MonoBehaviour
         }
 
     }
+
+    public void FireButtonClicked()
+    {
+        if (_isShootable)
+        {
+            if (!SkillFunctions.Instance.IsThreeBall)
+            {
+                AudioManager.instance.PlaySFX("MainTower");
+                SpawnBall();
+            }
+            else
+            {
+                StartCoroutine(CO_ThreeBall());
+            }
+            StartCoroutine(SetIsShootable());
+        }
+    }
+
 
     private IEnumerator CO_ThreeBall()
     {

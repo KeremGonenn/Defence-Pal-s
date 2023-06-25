@@ -31,6 +31,7 @@ public class CannonBall : MonoBehaviour
             GiveDamage();
 
             Destroy(gameObject, 0.2f);
+            AudioManager.instance.PlaySFX("BlastSound");
         }
     }
 

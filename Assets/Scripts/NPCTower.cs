@@ -90,6 +90,8 @@ public class NPCTower : MonoBehaviour
 
             _shootEffect.Play();
 
+            AudioManager.instance.PlaySFX("NPCTower");
+
             StartCoroutine(SetAttackableState()); 
 
         }
@@ -108,7 +110,7 @@ public class NPCTower : MonoBehaviour
         _attackTimer -= timer;
         if (_attackTimer <= .1f)
         {
-            _attackTimer = 0.1f;
+            _attackTimer = 0.2f;
         }
     }
 

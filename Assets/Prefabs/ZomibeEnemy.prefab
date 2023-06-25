@@ -15687,7 +15687,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 2
+  m_Speed: 1.8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -15711,10 +15711,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2ded710f175984f9e562181b436796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthValue: 50
+  _healthValue: 30
   _healthBar: {fileID: 4201592531886433672}
   _isTower: 0
-  goldValue: 10
+  goldValue: 25
   goldManager: {fileID: 0}
 --- !u!136 &548843735689958856
 CapsuleCollider:
